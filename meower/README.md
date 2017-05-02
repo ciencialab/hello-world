@@ -1,5 +1,5 @@
 # meower
-This is a simple Tweeter like social networking web application.
+This is a simple Tweeter like social networking web application.<br>
 Its functionality is accessible both by web page as well as underlying RESTful web service.
 
 #

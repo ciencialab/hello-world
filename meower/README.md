@@ -2,7 +2,7 @@
 This is a simple Tweeter like social networking web application.<br>
 Its functionality is accessible both by web page as well as underlying RESTful web service.
 
-##To run this application
+## To run this application
 Install WildFly 10 or above:
 
 
@@ -21,7 +21,7 @@ cd meower
 mvn install
 ```
 
-##Using web page
+## Using web page
 In your browser go to url:
 
 `http://localhost:8080/meower/`
@@ -35,7 +35,7 @@ You can open the above link in multiple browser windows/tabs to manage multiple 
 To start following other user fill in the "User name" field in the "Other users" section then press "Follow" button.<br>
 To stop following other user choose him/her from subsequent list then press "Unfollow" button.
 
-##Using web API
+## Using web API
 All the requests should be sent with the following headers:
 - Content-Type: application/json
 - Accept: application/json

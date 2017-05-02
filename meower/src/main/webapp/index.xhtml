@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="#{languageBean.language}"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta charset="utf-8" />
+        <title>#{bundle.pageTitle}</title>
+        <h:outputStylesheet
+            library="css"
+            name="stylesheet.css" />
+    </h:head>
+
+    <h:body>
+        
+        <h1 class="centered">
+            
+            #{bundle.pageTitle}
+            
+            <h:graphicImage
+                url="#{resource['img:cat.png']}"
+                alt="cat"/>
+            
+        </h1>
+        
+        <h:form
+            id="pageForm"
+            onsubmit='document.getElementById("pageForm:clientTimezoneOffset").value = new Date().getTimezoneOffset();'>
+                    
+            <h:inputHidden
+                id="clientTimezoneOffset"
+                value="#{JSFController.clientTimezoneOffset}" />
+                        
+            <h:panelGrid
+                role="form"
+                columns="3"
+                width="100%"
+                cellpadding="10"
+                columnClasses="page-column, page-column, page-column">
+        
+                <h:column>
+        
+                    <h2 class="centered">#{bundle.myPosts}</h2>
+                
+                    <h1 class="centered">
+                        <h:outputText
+                            id="userNameGiven"
+                            value="#{JSFController.userName}"
+                            rendered="#{!empty JSFController.userName}" />
+                    </h1>
+                        
+                    <p />
+                    <h:selectOneMenu
+                        id="userNameChoice"
+                        value="#{JSFController.changeToUserName}">
+                        
+                        <f:selectItems
+                            value="#{JSFController.userNames}">
+                        </f:selectItems>
+                        
+                    </h:selectOneMenu>
+                    
+                    <h:outputText
+                        value=" " />
+                    <h:commandButton
+                        value="#{bundle.changeUser}"
+                        action="#{JSFController.changeUser}" />
+                        
+                    <p />
+                    <h:outputLabel
+                        value="#{bundle.userName}: "
+                        for="newUserName" />
+                        
+                    <h:inputText
+                        id="newUserName"
+                        value="#{JSFController.newUserName}" />
+                    
+                    <p />
+                    <h:outputLabel
+                        value="#{bundle.postContent}: "
+                        for="postContent" />
+                    <br />
+                    <h:inputTextarea
+                        id="postContent"
+                        value="#{JSFController.postContent}"
+                        rows="5"
+                        styleClass="h-match-parent" />
+                    
+                    <p />
+                    <h:message
+                        id="createPostMessage"
+                        for="postContent"
+                        errorClass="error" />
+                    
+                    <p />
+                    <h:commandButton
+                        value="#{bundle.createPost}"
+                        action="#{JSFController.createPost}" />
+        
+                    <p></p>
+                    <h:dataTable
+                        value="#{JSFController.posts}"
+                        var="post"
+                        styleClass="h-match-parent"
+                        columnClasses="post-column">
+
+                        <h:column>
+
+                            <h:outputText
+                                value="#{post.dateTimeCreated} @#{post.authorName}" />
+                            
+                            <p />
+                            <h:outputText
+                                value="#{post.content}" />
+
+                        </h:column>
+
+                    </h:dataTable>
+                
+                </h:column>
+            
+                <h:column>
+        
+                    <h2 class="centered">#{bundle.otherUsers}</h2>
+                
+                    <h:outputLabel
+                        value="#{bundle.userName}: "
+                        for="userNameToFollow" />
+                        
+                    <h:inputText
+                        id="userNameToFollow"
+                        value="#{JSFController.userNameToFollow}" />
+                    
+                    <p />
+                    <h:message
+                        id="userToFollowSearchMessage"
+                        for="userNameToFollow"
+                        errorClass="error" />
+                    
+                    <p />
+                    <h:commandButton
+                        value="#{bundle.follow}"
+                        action="#{JSFController.follow}" />
+                    
+                    <p />
+                    <h:selectOneListbox
+                        value="#{JSFController.userNameToUnfollow}">
+                        
+                        <f:selectItems
+                            value="#{JSFController.followedUsers}">
+                        </f:selectItems>
+                        
+                    </h:selectOneListbox>
+
+                    <p />
+                    <h:commandButton
+                        value="#{bundle.unfollow}"
+                        action="#{JSFController.unfollow}" />
+                
+                </h:column>
+
+                <h:column>
+        
+                    <h2 class="centered">#{bundle.followedPosts}</h2>
+
+                    <h:dataTable
+                        value="#{JSFController.followedPosts}"
+                        var="post"
+                        styleClass="h-match-parent"
+                        columnClasses="post-column">
+
+                        <h:column>
+
+                            <h:outputText
+                                value="#{post.dateTimeCreated} @#{post.authorName}" />
+                            
+                            <p />
+                            <h:outputText
+                                value="#{post.content}" />
+
+                        </h:column>
+
+                    </h:dataTable>
+                
+                </h:column>
+            
+            </h:panelGrid>
+                        
+        </h:form>
+        
+    </h:body>
+
+</html>

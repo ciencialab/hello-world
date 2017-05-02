@@ -1,0 +1,23 @@
+h1, h2.centered {
+	text-align:center;
+}
+
+.page-column {
+	background-color: #eaf1f8;
+	vertical-align: top;
+	width: 30%;
+	border: 1px solid;
+}
+
+.post-column {
+    background-color: #ffffff;
+    border: 1px solid;
+}
+
+.h-match-parent {
+	width: 100%;
+}
+
+.error {
+    color:red;
+}

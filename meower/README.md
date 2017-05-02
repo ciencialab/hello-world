@@ -46,7 +46,7 @@ All the requests should be sent with the following headers:
 - Accept: application/json
 
 
-Request:<br>
+<b>Request:</b><br>
 GET<br>
 `http://localhost:8080/meower/webapi/users`<br>
 Response: All usernames list<br>
@@ -59,7 +59,7 @@ For example:
 ```
 
 
-Request:<br>
+<b>Request:</b><br>
 POST<br>
 `http://localhost:8080/meower/webapi/user/{username}/post`<br>
 Body: {username}'s post content string<br>
@@ -74,7 +74,7 @@ Example response when post exceedes 140 characters:<br>
 ```
 
 
-Request:<br>
+<b>Request:</b><br>
 GET<br>
 `http://localhost:8080/meower/webapi/user/{username}/posts`<br>
 Response: List of {username}'s posts in reverse chronological order<br>
@@ -100,7 +100,7 @@ For example:
 ```
 
 
-Request:<br>
+<b>Request:</b><br>
 GET<br>
 `http://localhost:8080/meower/webapi/user/{username}/followed-posts`<br>
 Response: List of all posts followed by {username} in reverse chronological order<br>
@@ -131,13 +131,13 @@ Example for username C:
 ```
 
 
-Request:<br>
+<b>Request:</b><br>
 POST<br>
 `http://localhost:8080/meower/webapi/user/{username}/follow`<br>
 Body: username to start to follow by {username}
 
 
-Request:<br>
+<b>Request:</b><br>
 GET<br>
 `http://localhost:8080/meower/webapi/user/{username}/followed-users`<br>
 Response: List of usernames followed by {username}<br>
@@ -150,7 +150,7 @@ Example for username C:
 ```
 
 
-Request:<br>
+<b>Request:</b><br>
 POST<br>
 `http://localhost:8080/meower/webapi/user/{username}/unfollow`<br>
 Body: username to stop to follow by {username}

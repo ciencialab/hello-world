@@ -13,4 +13,4 @@ java -jar target/MineSweeper-1.0-SNAPSHOT.jar
 You can change input mine-field values in the `main` method body in `SimpleMineSweeper.java` file contained in directory:
 `src/main/java/org/ciencialabart/minesweeper`
 
-**Note:** *For Windows turn all below slashes "/" into backslashes "\".*
+**Note:** *For Windows turn all above slashes "/" into backslashes "\".*

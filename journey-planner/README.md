@@ -43,6 +43,7 @@ POST<br>
 `http://localhost:8080/journey-plan/{id}`<br>
 Parameters:<br>
 name - new journey plan name<br>
+<br>
 Renames {id} journey plan<br>
 
 

@@ -9,4 +9,5 @@ This repository contains:
 | **FoodOnFork** | Simple food ordering command line system |
 | **MineSweeper** | Mine Sweeper game validation interface implementation |
 | **word-chain-resolver** | Dictionary based word chain finding application |
+| **journey-planner** | Simple RESTful web service - currently under development |
 

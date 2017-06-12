@@ -1,6 +1,6 @@
 # journey-planner
 This is a simple RESTful web service.<br>
-Currently there are implemented CRUD operations for journey-plan lifecycle only.<br>
+Currently there are implemented CRUD operations for journey-plan and place lifecycle.<br>
 
 ## To run this application
 Type the following commands:

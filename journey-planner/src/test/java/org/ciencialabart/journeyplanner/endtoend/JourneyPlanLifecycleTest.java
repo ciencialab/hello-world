@@ -24,7 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfiguration.class)
 @WebAppConfiguration
-public class JourneyPlanningTest {
+public class JourneyPlanLifecycleTest {
     
     @Autowired
     private WebApplicationContext context;
@@ -50,7 +50,7 @@ public class JourneyPlanningTest {
         deleteJourneyPlan(journeyPlanId);
         assertJourneyPlanMissing(journeyPlanId);
     }
-
+    
     private long createJourneyPlan(String newJourneyPlanName) throws Exception {
         return Long.valueOf(mockMvc
                 .perform(post("/journey-plan")

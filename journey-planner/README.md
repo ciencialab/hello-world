@@ -51,3 +51,44 @@ Renames {id} journey plan<br>
 DELETE<br>
 `http://localhost:8080/journey-plan/{id}`<br>
 Removes {id} journey plan<br>
+
+<b>Request:</b><br>
+POST<br>
+`http://localhost:8080/place`<br>
+Parameters:<br>
+name - place name<br>
+<br>
+Creates new place<br>
+Response: Place id<br>
+For example:
+```
+3
+```
+
+
+<b>Request:</b><br>
+GET<br>
+`http://localhost:8080/place/{id}`<br>
+Response: {id} place details<br>
+For example:
+```
+{
+  "id": 3,
+  "name": "New York"
+}
+```
+
+
+<b>Request:</b><br>
+POST<br>
+`http://localhost:8080/place/{id}`<br>
+Parameters:<br>
+name - new place name<br>
+<br>
+Renames {id} place<br>
+
+
+<b>Request:</b><br>
+DELETE<br>
+`http://localhost:8080/place/{id}`<br>
+Removes {id} place<br>

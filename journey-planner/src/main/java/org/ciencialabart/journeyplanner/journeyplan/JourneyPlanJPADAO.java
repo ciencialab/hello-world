@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public class JourneyPlanDAOImpl implements JourneyPlanDAO {
+public class JourneyPlanJPADAO implements JourneyPlanDAO {
     
     @PersistenceContext
     private EntityManager entityManager;

@@ -121,9 +121,8 @@ Content:<br>
 Creates new transit<br>
 Response: Transit id<br>
 For example:<br>
-```
-5
-```
+`5`<br>
+<br>
 
 
 <b>Request:</b><br>

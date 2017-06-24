@@ -10,9 +10,9 @@ public class JourneyPlan {
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
     
-    private String name;
+    private String name = "";
 
     public JourneyPlan() {}
 
@@ -26,12 +26,39 @@ public class JourneyPlan {
         this.id = id;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
     public String getName() {
         return name;
+    }
+    
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other instanceof JourneyPlan) {
+            JourneyPlan otherJourneyPlan = (JourneyPlan) other;
+            
+            if (id == null) {
+                return name.equals(otherJourneyPlan.name);
+            } else {
+                return id.equals(otherJourneyPlan.id);
+            }
+        }
+        
+        return false;
+    }
+    
+    @Override
+    public int hashCode() {
+        if (id == null) {
+            return name.hashCode();
+        }
+        
+        return id.hashCode();
     }
     
 }

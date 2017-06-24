@@ -1,12 +1,8 @@
 package org.ciencialabart.journeyplanner.endtoend;
 
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import org.ciencialabart.journeyplanner.ApplicationConfiguration;
@@ -52,37 +48,59 @@ public class PlaceLifecycleTest {
     }
     
     private long createPlace(String newPlaceName) throws Exception {
+        return createPlace(mockMvc, newPlaceName);
+    }
+    
+    public static long createPlace(MockMvc mockMvc, String newPlaceName) throws Exception {
         return Long.valueOf(mockMvc
-                .perform(post("/place")
+                .perform(post("/places")
                         .param("name", newPlaceName))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString());
     }
     
     private void renamePlace(long placeId, String modifiedPlaceName) throws Exception {
-        mockMvc.perform(post("/place/" + placeId)
+        mockMvc.perform(post("/places/" + placeId)
                     .param("name", modifiedPlaceName))
             .andExpect(status().isOk());
     }
 
     private void assertPlaceNameForId(String placeName, long id) throws Exception {
-        mockMvc.perform(get("/place/" + id)
-                    .accept(MediaType.valueOf("application/json")))
+        assertPlaceNameForId(mockMvc, placeName, id);
+    }
+
+    public static void assertPlaceNameForId(MockMvc mockMvc, String placeName, long id) throws Exception {
+        mockMvc.perform(get("/places/" + id)
+                .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id", is((int) id)))
             .andExpect(jsonPath("$.name", is(placeName)));
     }
 
     private void deletePlace(long placeId) throws Exception {
-        mockMvc.perform(delete("/place/" + placeId))
+        deletePlace(mockMvc, placeId);
+    }
+
+    public static void deletePlace(MockMvc mockMvc, long placeId) throws Exception {
+        mockMvc.perform(delete("/places/" + placeId))
             .andExpect(status().isOk());
     }
 
+    public static void assertPlaceNotRemovable(MockMvc mockMvc, long placeId) throws Exception {
+        mockMvc.perform(delete("/places/" + placeId))
+            .andExpect(status().isConflict());
+    }
+
     private void assertPlaceMissing(long placeId) throws Exception {
-        mockMvc.perform(get("/place/" + placeId)
-                    .accept(MediaType.valueOf("application/json")))
-            .andExpect(status().isOk())
-            .andExpect(content().string(""));
+        mockMvc.perform(get("/places/" + placeId)
+                    .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+    }
+
+    public static void assertPlaceExists(MockMvc mockMvc, long placeId) throws Exception {
+        mockMvc.perform(get("/places/" + placeId)
+                .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk());
     }
     
 }

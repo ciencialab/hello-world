@@ -1,12 +1,8 @@
 package org.ciencialabart.journeyplanner.endtoend;
 
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import org.ciencialabart.journeyplanner.ApplicationConfiguration;
@@ -53,36 +49,35 @@ public class JourneyPlanLifecycleTest {
     
     private long createJourneyPlan(String newJourneyPlanName) throws Exception {
         return Long.valueOf(mockMvc
-                .perform(post("/journey-plan")
+                .perform(post("/journey-plans")
                         .param("name", newJourneyPlanName))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString());
     }
     
     private void renameJourneyPlan(long journeyPlanId, String modifiedJourneyPlanName) throws Exception {
-        mockMvc.perform(post("/journey-plan/" + journeyPlanId)
+        mockMvc.perform(post("/journey-plans/" + journeyPlanId)
                     .param("name", modifiedJourneyPlanName))
             .andExpect(status().isOk());
     }
 
     private void assertJourneyPlanNameForId(String journeyPlanName, long id) throws Exception {
-        mockMvc.perform(get("/journey-plan/" + id)
-                    .accept(MediaType.valueOf("application/json")))
+        mockMvc.perform(get("/journey-plans/" + id)
+                    .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id", is((int) id)))
             .andExpect(jsonPath("$.name", is(journeyPlanName)));
     }
 
     private void deleteJourneyPlan(long journeyPlanId) throws Exception {
-        mockMvc.perform(delete("/journey-plan/" + journeyPlanId))
+        mockMvc.perform(delete("/journey-plans/" + journeyPlanId))
             .andExpect(status().isOk());
     }
 
     private void assertJourneyPlanMissing(long journeyPlanId) throws Exception {
-        mockMvc.perform(get("/journey-plan/" + journeyPlanId)
-                    .accept(MediaType.valueOf("application/json")))
-            .andExpect(status().isOk())
-            .andExpect(content().string(""));
+        mockMvc.perform(get("/journey-plans/" + journeyPlanId)
+                    .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
     }
     
 }

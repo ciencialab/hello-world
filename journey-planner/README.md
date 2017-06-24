@@ -120,7 +120,7 @@ Content:<br>
 <br>
 Creates new transit<br>
 Response: Transit id<br>
-For example:
+For example:<br>
 ```
 5
 ```

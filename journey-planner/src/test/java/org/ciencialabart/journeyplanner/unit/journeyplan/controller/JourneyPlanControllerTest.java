@@ -73,8 +73,7 @@ public class JourneyPlanControllerTest {
     }
     
     @Test
-    public void should_ReturnStatusNotFound_ForPostWithNotExistingIdInPathAndNameInParam()
-            throws Exception {
+    public void should_ReturnStatusNotFound_ForPostWithNotExistingIdInPathAndNameInParam() throws Exception {
         String modifiedJourneyPlanName = "Modified journey plan";
         
         doThrow(new ResourceNotFoundException()).when(journeyPlanService).rename(3L, modifiedJourneyPlanName);

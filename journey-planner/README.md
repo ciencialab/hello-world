@@ -3,7 +3,7 @@ This is a simple RESTful web service.<br>
 It aims to plan journeys composed of single transits between user defined places with subsequent departure and arrival times.<br>
 <br>
 Currently there are implemented CRUD operations for journey-plan, place and transit lifecycle.<br>
-Negative scenarios are partially prevented (in case of journey-plan).
+Negative scenarios are partially prevented (in case of journey-plans and places).
 Error messages and transits addition to journey-plan needs still to be implemented.<br>
 
 ## To run this application
@@ -120,8 +120,10 @@ Content:<br>
 <br>
 Creates new transit<br>
 Response: Transit id<br>
-For example: 5<br>
-<br>
+For example:
+```
+5
+```
 
 
 <b>Request:</b><br>

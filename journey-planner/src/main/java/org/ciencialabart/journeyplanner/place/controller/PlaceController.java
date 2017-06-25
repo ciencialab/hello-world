@@ -3,6 +3,7 @@ package org.ciencialabart.journeyplanner.place.controller;
 import java.util.Optional;
 
 import org.ciencialabart.journeyplanner.exception.RemovedResourceInUseException;
+import org.ciencialabart.journeyplanner.exception.http.BadRequestException;
 import org.ciencialabart.journeyplanner.exception.http.ResourceInConflictingStateException;
 import org.ciencialabart.journeyplanner.exception.http.ResourceNotFoundException;
 import org.ciencialabart.journeyplanner.place.dto.PlaceDTO;
@@ -32,12 +33,24 @@ public class PlaceController {
     @PostMapping
     @ResponseBody
     public String createForName(@RequestParam String name) {
+        if (name.isEmpty()) {
+            throw new BadRequestException();
+        }
+        
         return String.valueOf(placeService.createForName(name));
     }
 
     @PostMapping(path = "/{id}")
     public void rename(@PathVariable long id, @RequestParam String name) {
-        placeService.rename(id, name);
+        if (name.isEmpty()) {
+            throw new BadRequestException();
+        }
+        
+        try {
+            placeService.rename(id, name);
+        } catch (ResourceNotFoundException e) {
+            throw new ResourceNotFoundException();
+        }
     }
     
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,6 +69,8 @@ public class PlaceController {
     public void delete(@PathVariable long id) {
         try {
             placeService.delete(id);
+        } catch (ResourceNotFoundException e) {
+            throw new ResourceNotFoundException();
         } catch (RemovedResourceInUseException e) {
             throw new ResourceInConflictingStateException();
         }

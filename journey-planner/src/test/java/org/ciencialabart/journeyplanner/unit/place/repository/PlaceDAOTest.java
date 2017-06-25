@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 
 import org.ciencialabart.journeyplanner.exception.RemovedResourceInUseException;
+import org.ciencialabart.journeyplanner.exception.http.ResourceNotFoundException;
 import org.ciencialabart.journeyplanner.place.Place;
 import org.ciencialabart.journeyplanner.place.repository.PlaceJPADAO;
 import org.ciencialabart.journeyplanner.transit.Transit;
@@ -56,12 +57,29 @@ public class PlaceDAOTest {
     }
     
     @Test
-    public void should_MergePlaceGiven() throws Exception {
+    public void should_MergePlace_IfExist() throws Exception {
         Place mergedPlace = mock(Place.class);
+        Long mergedPlaceId = 2L;
+        
+        when(mergedPlace.getId()).thenReturn(mergedPlaceId);
+        when(entityManager.find(Place.class, mergedPlaceId)).thenReturn(mock(Place.class));
         
         placeDAO.update(mergedPlace);
         
         verify(entityManager).merge(mergedPlace);
+    }
+    
+    @Test
+    public void should_throwResourceNotFoundException_IfPlaceBeingUpdatedNotExist() throws Exception {
+        Place mergedPlace = mock(Place.class);
+        Long mergedPlaceId = 2L;
+        
+        when(mergedPlace.getId()).thenReturn(mergedPlaceId);
+        when(entityManager.find(Place.class, mergedPlaceId)).thenReturn(null);
+        
+        thrown.expect(ResourceNotFoundException.class);
+        
+        placeDAO.update(mergedPlace);
     }
     
     @Test
@@ -110,6 +128,19 @@ public class PlaceDAOTest {
         InOrder inOrder = inOrder(entityManager);
         inOrder.verify(entityManager).find(Place.class, existingPlaceId);
         inOrder.verify(entityManager).remove(existingPlace);
+    }
+    
+    @Test
+    public void should_ThrowResourceNotFoundException_IfPlaceBeingDeletedNotExist() throws Exception {
+        long notExistingPlaceId = 2L;
+        
+        when(entityManager.find(Place.class, notExistingPlaceId)).thenReturn(null);
+        
+        thrown.expect(ResourceNotFoundException.class);
+        
+        placeDAO.delete(notExistingPlaceId);
+        
+        verify(entityManager).find(Place.class, notExistingPlaceId);
     }
     
     @Test

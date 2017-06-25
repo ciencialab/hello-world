@@ -54,6 +54,14 @@ public class PlaceControllerTest {
     }
     
     @Test
+    public void should_ReturnStatusBadRequest_ForPostWithEmptyNameInParam() throws Exception {
+        mockMvc
+            .perform(post("/places")
+                    .param("name", ""))
+                .andExpect(status().isBadRequest());
+    }
+    
+    @Test
     public void should_RenamePlaceAndReturnStatusOk_ForPostWithExistingIdInPathAndNameInParam()
             throws Exception {
         String modifiedPlaceName = "Modified place";
@@ -63,6 +71,27 @@ public class PlaceControllerTest {
             .andExpect(status().isOk());
         
         verify(placeService).rename(2L, modifiedPlaceName);
+    }
+    
+    @Test
+    public void should_ReturnStatusNotFound_ForPostWithNotExistingIdInPathAndNameInParam() throws Exception {
+        String modifiedPlaceName = "Modified place";
+        
+        doThrow(new ResourceNotFoundException()).when(placeService).rename(3L, modifiedPlaceName);
+        
+        mockMvc.perform(post("/places/3")
+                .param("name", modifiedPlaceName))
+            .andExpect(status().isNotFound());
+        
+        verify(placeService).rename(3L, modifiedPlaceName);
+    }
+    
+    @Test
+    public void should_ReturnStatusBadRequest_ForPostWithIdInPathAndEmptyNameInParam()
+            throws Exception {
+        mockMvc.perform(post("/places/2")
+                .param("name", ""))
+            .andExpect(status().isBadRequest());
     }
     
     @Test
@@ -104,13 +133,27 @@ public class PlaceControllerTest {
     }
     
     @Test
+    public void should_ReturnStatusNotFound_ForDeleteWithNotExistingPlaceIdInPath() throws Exception {
+        long placeId = 3L;
+        
+        doThrow(new ResourceNotFoundException()).when(placeService).delete(placeId);
+        
+        mockMvc.perform(delete("/places/3"))
+            .andExpect(status().isNotFound());
+        
+        verify(placeService).delete(placeId);
+    }
+    
+    @Test
     public void should_ReturnStatusConflict_ForDeleteWithExistingInUsePlaceIdInPath() throws Exception {
-        doThrow(new RemovedResourceInUseException()).when(placeService).delete(2L);
+        long placeId = 2L;
+        
+        doThrow(new RemovedResourceInUseException()).when(placeService).delete(placeId);
         
         mockMvc.perform(delete("/places/2"))
             .andExpect(status().isConflict());
         
-        verify(placeService).delete(2L);
+        verify(placeService).delete(placeId);
     }
     
 }

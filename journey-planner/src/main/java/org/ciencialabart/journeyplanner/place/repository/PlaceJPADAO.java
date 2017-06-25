@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.ciencialabart.journeyplanner.exception.RemovedResourceInUseException;
+import org.ciencialabart.journeyplanner.exception.http.ResourceNotFoundException;
 import org.ciencialabart.journeyplanner.place.Place;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,10 @@ public class PlaceJPADAO implements PlaceDAO {
 
     @Override
     public void update(Place place) {
+        if (entityManager.find(Place.class, place.getId()) == null) {
+            throw new ResourceNotFoundException();
+        }
+        
         entityManager.merge(place);
     }
 
@@ -37,6 +42,10 @@ public class PlaceJPADAO implements PlaceDAO {
     @Override
     public void delete(long id) {
         Place place = entityManager.find(Place.class, id);
+        
+        if (place == null) {
+            throw new ResourceNotFoundException();
+        }
         
         if (place.getDepartureTransits().isEmpty() &&
                 place.getArrivalTransits().isEmpty()) {

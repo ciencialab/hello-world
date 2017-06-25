@@ -66,7 +66,7 @@ public class JourneyPlanDAOTest {
     }
     
     @Test
-    public void should_throwResourceNotFoundException_IfJourneyPlanNotExist() throws Exception {
+    public void should_ThrowResourceNotFoundException_IfJourneyPlanBeingUpdatedNotExist() throws Exception {
         JourneyPlan mergedJourneyPlan = mock(JourneyPlan.class);
         Long mergedJourneyPlanId = 2L;
         
@@ -123,16 +123,16 @@ public class JourneyPlanDAOTest {
     }
     
     @Test
-    public void should_ThrowResourceNotFoundException_IfJourneyPlanNotExist() throws Exception {
-        long existingJourneyPlanId = 2L;
+    public void should_ThrowResourceNotFoundException_IfJourneyPlanBeingDeletedNotExist() throws Exception {
+        long notExistingJourneyPlanId = 2L;
         
-        when(entityManager.find(JourneyPlan.class, existingJourneyPlanId)).thenReturn(null);
+        when(entityManager.find(JourneyPlan.class, notExistingJourneyPlanId)).thenReturn(null);
         
         thrown.expect(ResourceNotFoundException.class);
         
-        journeyPlanDAO.delete(existingJourneyPlanId);
+        journeyPlanDAO.delete(notExistingJourneyPlanId);
         
-        verify(entityManager).find(JourneyPlan.class, existingJourneyPlanId);
+        verify(entityManager).find(JourneyPlan.class, notExistingJourneyPlanId);
     }
     
 }

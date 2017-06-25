@@ -65,7 +65,6 @@ public class JourneyPlanController {
 
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable long id) {
-        
         try {
             journeyPlanService.delete(id);
         } catch (ResourceNotFoundException e) {

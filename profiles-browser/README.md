@@ -43,7 +43,7 @@ Example content:<br>
         "message" : "Beautiful picture."
       }, {
         "id" : "2",
-        "message" : "Great sound.! No more glare.!!!! I love this TV. I bought this on for $1299.00 the Sunday before black Friday."
+        "message" : "Great sound.! I bought this on for $1299.00 the Sunday before black Friday."
       }, {
         "id" : "3",
         "message" : "We definitely go by the new TV's now and just shake our heads at our mistake."
@@ -52,6 +52,8 @@ Example content:<br>
 ```
 <br>
 Creates new Facebook profile<br>
+<br>
+<br>
 
 
 <b>Request:</b><br>
@@ -72,7 +74,8 @@ For example:
     "you": 11,
     "lighting": 2,
     "at": 2,
-}```
+}
+```
 
 
 <b>Request:</b><br>
